@@ -7,27 +7,27 @@
 
 var linkExterno = document.getElementsByClassName("menu-lista-contato");
 linkExterno[0].addEventListener("click", function () {
-    alert("clicked");
+    gaSend('menu', 'entre_em_contato', event.target.id)
 }, false);
 
 var downloadPdf = document.getElementsByClassName("menu-lista-download");
 downloadPdf[0].addEventListener("click", function () {
-    alert("clicked");
+    gaSend('menu', 'download_pdf', event.target.id)
 }, false);
 
 function formChange(event) {
     switch (event.target.id) {
         case 'nome':
-            console.log('nome')
+            gaSend('contato', event.target.id, 'preencheu')
             break;
         case 'email':
-            console.log('email')
+            gaSend('contato', event.target.id, 'preencheu')
             break;
         case 'telefone':
-            console.log('telefone')
+            gaSend('contato', event.target.id, 'preencheu')
             break;
         case 'aceito':
-            console.log('aceito')
+            gaSend('contato', event.target.id, 'preencheu')
             break;
 
         default:
@@ -35,25 +35,22 @@ function formChange(event) {
     }
 }
 
-function formSend(params) {
-    alert("form enviado")
+function formSend() {
+    gaSend('contato', 'enviado', 'enviado')
 }
 
 function analyticsPageAnalise(event) {
-    const data = {
-        categoria: 'analise',
-        acao: 'ver_mais',
-        rotulo: event.target.id
-    }
-    console.log(data)
+    gaSend('analise', 'ver_mais', event.target.id)
 }
 
-function gaSend(data) {
+function gaSend(categoria, acao, rotulo) {
+    const data = {
+        categoria: categoria,
+        acao: acao,
+        rotulo: rotulo
+    }
     ga(function (tracker) {
-        tracker.send('event', 'Video', 'play', 'cats.mp4');
+        tracker.send(data);
     });
-
-    ga('[trackerName.]send', [hitType], [...fields], [fieldsObject]);
-
 }
 
